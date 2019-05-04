@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Phoenix.Core;
 using Phoenix.Domain;
-using Phoenix.Domain.Customer;
 
 namespace Phoenix.Infrastructure.EFCore
 {
