@@ -5,45 +5,28 @@ using Phoenix.Domain.Shared;
 
 namespace Phoenix.Domain.Customer
 {
-    public sealed class Customer : User, IEntity
+    public sealed class Customer : IEntity
     {
-        private readonly string _code;
-        private readonly string _name;
-        private Address _address;
-        public Customer(string code, string name, Address address)
+        public Customer(string name, Address address)
         {
-            Guard.NotNullOrEmpty(code);
-            Guard.NotNullOrEmpty(name);
-            Guard.NotNull(address);
+            if (name == null)
+                throw new ArgumentNullException(nameof(name));
+
+            if (address == null)
+                throw new ArgumentNullException(nameof(name));
             
-            _code = code;
-            _name = name;
-            _address = address;
+            Name = name;
+            Address = address;
         }
 
-        public string Name 
-        { 
-            get
-            {
-                return _name;
-            }
-        }
-
-        public Address Address 
-        { 
-            get
-            {
-                return _address;
-            }
-        }
-
-        public long Id => throw new NotImplementedException();
-
+        public long Id { get; }
+        public string Name { get; private set; }
+        public Address Address { get; private set; }
         public void ChangeAddress(Address newAddress)
         {
-            Guard.NotNull(newAddress);
-
-            _address = newAddress;
+            if (newAddress == null)
+                throw new ArgumentNullException(nameof(newAddress));
+            Address = newAddress;
         }
     }
 }
