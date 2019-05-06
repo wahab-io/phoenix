@@ -9,47 +9,45 @@ using Phoenix.Domain;
 
 namespace Phoenix.Infrastructure.EFCore
 {
-    /// <summary>
-    /// The single responsibility of Customer Repository is to
-    /// encapsulate customer persistance logic
-    /// </summary>
-    public class CustomerRepository : DbContext, IRepository<Customer>
+    public sealed class CustomerService : DbContext, ICustomerService
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
+        private readonly IOrderService _orderService;
+        public CustomerService(ILogger logger, IOrderService orderService)
+        {
+            _logger = logger;
+            _logger.LogDebug("Creating CustomerService");
+        }
+
         public DbSet<Customer> Customers { get; set; }
-        public CustomerRepository(ILogger logger)
+        public DbSet<Order> Orders { get; set; }
+        public void AddCustomer(Customer newCustomer)
         {
-            this.logger = logger;
-            logger.LogInformation("CustomerRepository::CustomerRepository()");
+            Customers.Add(newCustomer);
         }
 
-        public Task<IQueryable<Customer>> GetAll()
+        public void CreateOrder(Order newOrder)
         {
-            logger.LogInformation("CustomerRepository::GetAll()");
             throw new NotImplementedException();
         }
 
-        public Task<Customer> Get(Expression<Func<Customer, bool>> predicate)
+        public void FindCustomer(long id)
         {
-            logger.LogInformation("CustomerRepository::Get()");
             throw new NotImplementedException();
         }
 
-        public Task<Customer> GetById(long id)
+        public bool RemoveCustomer(Customer customer)
         {
-            logger.LogInformation("CustomerRepository::GetById()");
             throw new NotImplementedException();
         }
 
-        public Task Create(Customer newEntity)
+        public bool SearchCustomer(string query)
         {
-            logger.LogInformation("CustomerRepository::Create()");
             throw new NotImplementedException();
         }
 
-        public Task Remove(Customer entity)
+        public void UpdateCustomer(Customer customer)
         {
-            logger.LogInformation("CustomerRepository::Remove()");
             throw new NotImplementedException();
         }
     }
