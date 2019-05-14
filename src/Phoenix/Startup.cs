@@ -9,7 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using App.Metrics.AspNetCore.Mvc;
+using Phoenix.Infrastructure.EFCore;
 
 namespace Phoenix
 {
@@ -33,7 +35,12 @@ namespace Phoenix
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);            
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddDbContext<PhoenixContext>(
+                options =>
+                {
+                    options.UseSqlite("Data Source=phoenix.db");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -13,4 +13,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Phoenix.Domain\Phoenix.Domain.csproj" />
+    <ProjectReference Include="..\Phoenix.Infrastructure\Phoenix.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -20,7 +20,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Phoenix/bin/Debug/netcoreapp2.0/Phoenix.dll",
+            "program": "${workspaceFolder}/src/Phoenix/bin/Debug/netcoreapp2.2/Phoenix.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Phoenix",
             "stopAtEntry": false,

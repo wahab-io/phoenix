@@ -6,7 +6,7 @@ namespace Phoenix.Domain
 {
     public class Address : ValueObject
     {
-        public Address (string streetLine1, string streetLine2, string city, string zipCode, string state, string country)
+        private Address (string streetLine1, string streetLine2, string city, string zipCode, string state, string country)
         {
             if (string.IsNullOrEmpty(streetLine1))
                 throw new ArgumentNullException(nameof(streetLine1));
