@@ -1,24 +1,24 @@
-@model Phoenix.Models.CustomerModel
+@model Phoenix.Models.SupplierModel
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Add Customer</h1>
+<h1>Add Supplier</h1>
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Post" asp-controller="Customer">
+        <form asp-action="Post" asp-controller="Suppliers">
             <div class="form-group">
                 <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" placeholder="Enter Name" />
             </div>
             <div class="form-group">
-                <label asp-for="StreetLine1"></label>
-                <input asp-for="StreetLine1" class="form-control" placeholder="Enter Street Address" />
+                <label asp-for="AddressLine1"></label>
+                <input asp-for="AddressLine1" class="form-control" placeholder="Enter Street Address" />
             </div>
             <div class="form-group">
-                <label asp-for="StreetLine2"></label>
-                <input asp-for="StreetLine2" class="form-control" placeholder="Enter Street Address" /> 
+                <label asp-for="AddressLine2"></label>
+                <input asp-for="AddressLine2" class="form-control" placeholder="Enter Street Address" /> 
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">

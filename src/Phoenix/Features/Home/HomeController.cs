@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Phoenix.Models;
 
-namespace Phoenix.Controllers
+namespace Phoenix.Features.Home
 {
     public class HomeController : Controller
     {

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Phoenix.Domain;
+using Phoenix.Domain.Customers;
 using Phoenix.Infrastructure.EFCore;
 using Phoenix.Models;
 
 
-namespace Phoenix.Controllers
+namespace Phoenix.Features.Customers
 {
-    public sealed class CustomerController : Controller
+    public sealed class CustomersController : Controller
     {
         private readonly PhoenixContext _context;
-        public CustomerController(PhoenixContext context)
+        public CustomersController(PhoenixContext context)
         {
             _context = context;
         }
@@ -36,19 +36,13 @@ namespace Phoenix.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Post(CustomerModel customer)
+        public IActionResult Post(CustomerModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-                
-            var c = new Customer();
-            c.Name = customer.Name;
-            c.StreetLine1 = customer.StreetLine1;
-            c.StreetLine2 = customer.StreetLine2;
-            c.City = customer.City;
-            c.State = customer.State;
-            c.ZipCode = customer.ZipCode;
-            _context.Customers.Add(c);
+
+            var customer = model.ToCustomer();
+            _context.Customers.Add(customer);
             _context.SaveChanges();
 
             return RedirectToAction("index");

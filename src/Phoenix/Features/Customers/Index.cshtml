@@ -1,0 +1,45 @@
+@model IEnumerable<Phoenix.Domain.Customers.Customer>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Customers</h1>
+        </div>
+        <div class="col-md-6">
+            <a asp-action="Add" asp-controller="Customers" class="btn btn-primary">Add Customer</a>   
+        </div>
+    </div>
+</div>
+
+<div>
+    <table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Fax</th>
+            <th scope="col">City</th>
+            <th scope="col">Country</th>            
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <th scope="row">@Html.DisplayFor(c => customer.Id)</th>
+                <td>@Html.DisplayFor(c => customer.Name)</td>
+                <td>@Html.DisplayFor(c => customer.Phone)</td>
+                <td>@Html.DisplayFor(c => customer.Fax)</td>
+                <td>@Html.DisplayFor(c => customer.City)</td>
+                <td>@Html.DisplayFor(c => customer.Country)</td>                
+                <td>@Html.ActionLink("Delete", "Delete", "Customers", new { customer.Id })</td>
+            </tr>   
+        }
+    </tbody>
+    </table>
+</div>

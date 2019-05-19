@@ -3,6 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Logging;
 using Phoenix.Domain;
+using Phoenix.Domain.Customers;
+using Phoenix.Domain.Suppliers;
+using Phoenix.Domain.Orders;
+using Phoenix.Domain.Products;
 
 namespace Phoenix.Infrastructure.EFCore
 {
@@ -18,16 +22,37 @@ namespace Phoenix.Infrastructure.EFCore
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().HasData(
-                new Customer[]
-                {
-                    new Customer { Id = 1, Name = "Apple Inc.", StreetLine1 = "1 Infinite Loop", City = "Cupertino", State = "CA", ZipCode = "98712" },
-                    new Customer { Id = 2, Name = "Google Inc.", StreetLine1 = "20 Main St.", City = "Mountain View", State = "CA", ZipCode = "96147" },
-                    new Customer { Id = 3, Name = "Facbook Inc.", StreetLine1 = "100 Social Dr.", City = "Palo Alto", State = "CA", ZipCode = "92618" }
-                }
-            );
+            modelBuilder.Entity<Customer>(entity => 
+            {
+                entity.ToTable("Customers")
+                    .HasData(Seed.Customers());
+            });
+            
+            modelBuilder.Entity<Supplier>(entity =>
+            {
+                entity.ToTable("Suppliers")
+                    .HasData(Seed.Suppliers());
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.ToTable("Products")
+                    .HasData(Seed.Products());
+            });
+
+            modelBuilder.Entity<Product.Price>(entity =>
+            {
+                entity.ToTable("Prices");
+            });
+
+            modelBuilder.Entity<Order.LineItem>(entity => 
+            {
+                entity.ToTable("LineItems");
+            });
         }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Supplier> Suppliers { get; set; }       
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
