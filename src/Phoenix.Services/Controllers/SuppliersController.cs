@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Phoenix.Domain.Suppliers;
 
@@ -16,6 +17,8 @@ namespace Phoenix.Services.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<dynamic> GetAll(int page = 1, int size = 10)
         {
             try
@@ -37,6 +40,9 @@ namespace Phoenix.Services.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Supplier> Get(long id)
         {
             try 
@@ -52,8 +58,10 @@ namespace Phoenix.Services.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult Create(Supplier supplier)
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult Create([FromBody] Supplier supplier)
         {
             try
             {
@@ -67,7 +75,10 @@ namespace Phoenix.Services.Controllers
         }
 
         [HttpPatch("{id}")]
-        public ActionResult Update(Supplier supplier)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult Update([FromBody] Supplier supplier)
         {
             try
             {
@@ -85,6 +96,9 @@ namespace Phoenix.Services.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult Delete(long id)
         {
             try

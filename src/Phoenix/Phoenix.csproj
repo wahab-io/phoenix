@@ -15,8 +15,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Phoenix.Domain\Phoenix.Domain.csproj" />
-    <ProjectReference Include="..\Phoenix.Infrastructure\Phoenix.Infrastructure.csproj" />
+    <ProjectReference Include="..\Phoenix.Client\Phoenix.Client.csproj" />
   </ItemGroup>
 
 </Project>

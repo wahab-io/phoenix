@@ -1,4 +1,4 @@
-@model IEnumerable<Phoenix.Domain.Suppliers.Supplier>
+@model IEnumerable<Phoenix.Features.Suppliers.SupplierViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -34,12 +34,11 @@
             <tr>
                 <th scope="row">@Html.DisplayFor(c => supplier.Id)</th>
                 <td>@Html.DisplayFor(c => supplier.Name)</td>
-                <td>@Html.DisplayFor(c => supplier.StreetAddress1)</td>
-                <td>@Html.DisplayFor(c => supplier.StreetAddress2)</td>
+                <td>@Html.DisplayFor(c => supplier.Phone)</td>
+                <td>@Html.DisplayFor(c => supplier.Fax)</td>
                 <td>@Html.DisplayFor(c => supplier.City)</td>
-                <td>@Html.DisplayFor(c => supplier.State)</td>
-                <td>@Html.DisplayFor(c => supplier.ZipCode)</td>
-                <td>@Html.ActionLink("Delete", "Delete", "Customer", new { supplier.Id })</td>
+                <td>@Html.DisplayFor(c => supplier.Country)</td>
+                <td>@Html.ActionLink("Delete", "Delete", "Supplier", new { supplier.Id })</td>
             </tr>   
         }
     </tbody>

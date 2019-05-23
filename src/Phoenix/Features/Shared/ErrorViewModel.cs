@@ -1,6 +1,6 @@
 using System;
 
-namespace Phoenix.Models
+namespace Phoenix.Features.Shared
 {
     public class ErrorViewModel
     {

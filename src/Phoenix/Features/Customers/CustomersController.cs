@@ -1,31 +1,42 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Phoenix.Domain.Customers;
-using Phoenix.Infrastructure.EFCore;
-using Phoenix.Models;
+using Phoenix.Client;
 
 
 namespace Phoenix.Features.Customers
 {
     public sealed class CustomersController : Controller
     {
-        private readonly PhoenixContext _context;
-        public CustomersController(PhoenixContext context)
+        private readonly PhoenixClient _phoenix;
+        public CustomersController(PhoenixClient phoenix)
         {
-            _context = context;
+            _phoenix = phoenix;
         }
                 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            if (!_context.Customers.Any())
-                return RedirectToAction("add");
+            try
+            {
+                var result = await _phoenix.Customers.GetAll();
+                return View(result);
+            }
+            catch (HttpRequestException ex)
+            {
+                return View(ex.Data);
+            }
+        }
 
-            var customers = _context.Customers.ToList();
-            return View(customers);
+        [HttpGet]
+        public async Task<IActionResult> Get(long id)
+        {
+            var result = await _phoenix.Customers.GetCustomerById(id);
+            return View(result);
         }
 
         [HttpGet]
@@ -36,31 +47,25 @@ namespace Phoenix.Features.Customers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Post(CustomerModel model)
+        public async Task<IActionResult> Post([FromForm] CreateCustomerRequest request)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            var result = await _phoenix.Customers.CreateCustomer(request);
+            return await Index();
+        }
 
-            var customer = model.ToCustomer();
-            _context.Customers.Add(customer);
-            _context.SaveChanges();
-
-            return RedirectToAction("index");
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update([FromRoute] long id, [FromBody] UpdateCustomerRequest request)
+        {
+            await _phoenix.Customers.UpdateCustomer(request);
+            return await Index();
         }
 
         [HttpGet]
-        public IActionResult Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
-            var customer = _context.Customers.FirstOrDefault(c => c.Id == id);
-            if (customer == null)
-                return NotFound();
-            _context.Customers.Remove(customer);
-            _context.SaveChanges();
-
-            if (_context.Customers.Any())
-                return RedirectToAction("index");
-            else
-                return RedirectToAction("add");
+            await _phoenix.Customers.DeleteCustomer(id);
+            return await Index();
         }
     }
 }

@@ -1,26 +1,20 @@
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Phoenix.Infrastructure.EFCore;
-using Phoenix.Models;
 
 namespace Phoenix.Features.Products
 {
     public sealed class ProductsController : Controller
     {
-        private readonly PhoenixContext _context;
-        public ProductsController(PhoenixContext context)
+        public ProductsController()
         {
-            _context = context;
+
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var products = _context.Products.ToList();
-            if (products.Any())
-                return View(products);
-            return RedirectToAction("Add");
+            return View();
         }
 
         [HttpGet]
@@ -30,7 +24,7 @@ namespace Phoenix.Features.Products
         }
 
         [HttpPost]
-        public IActionResult Add(ProductModel model)
+        public IActionResult Add(ProductViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

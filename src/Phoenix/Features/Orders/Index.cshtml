@@ -1,4 +1,4 @@
-@model IEnumerable<Phoenix.Domain.Orders.Order>
+@model IEnumerable<Phoenix.Features.Orders.OrderViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -29,9 +29,9 @@
         {
             <tr>
                 <th scope="row">@Html.DisplayFor(c => order.Id)</th>
-                <td>@Html.DisplayFor(c => order.Supplier.Name)</td>                
-                <td>@Html.DisplayFor(c => order.Customer.Name)</td>                
-                <td>@Html.ActionLink("Delete", "Delete", "Customer", new { order.Id })</td>
+                <td>@Html.DisplayFor(c => order.SupplierName)</td>                
+                <td>@Html.DisplayFor(c => order.CustomerName)</td>                
+                <td>@Html.ActionLink("Delete", "Delete", "Order", new { order.Id })</td>
             </tr>   
         }
     </tbody>

@@ -1,20 +1,18 @@
-@model IEnumerable<Phoenix.Domain.Customers.Customer>
+@model Phoenix.Client.GetAllCustomersResponse
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <div class="row">
-        <div class="col-md-6">
-            <h1>Customers</h1>
-        </div>
-        <div class="col-md-6">
-            <a asp-action="Add" asp-controller="Customers" class="btn btn-primary">Add Customer</a>   
-        </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Customers</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+        <a class="btn btn-sm btn-outline-secondary" asp-controller="Customers" asp-action="Add">New Customer</a>
+    </div>
     </div>
 </div>
 
-<div>
+<!-- <div>
     <table class="table table-hover">
     <thead>
         <tr>
@@ -28,7 +26,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var customer in Model)
+        @foreach (var customer in Model.Data)
         {
             <tr>
                 <th scope="row">@Html.DisplayFor(c => customer.Id)</th>
@@ -42,4 +40,4 @@
         }
     </tbody>
     </table>
-</div>
+</div> -->

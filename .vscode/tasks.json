@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Phoenix.Domain.Tests/Phoenix.Domain.Tests.csproj"
+                "${workspaceFolder}/src/Phoenix/Phoenix.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
