@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Phoenix.Features.Products
 {
+    [Route("products")]
     public sealed class ProductsController : Controller
     {
         public ProductsController()
@@ -17,8 +18,8 @@ namespace Phoenix.Features.Products
             return View();
         }
 
-        [HttpGet]
-        public IActionResult Add()
+        [HttpGet("new")]
+        public IActionResult New()
         {
             return View();
         }

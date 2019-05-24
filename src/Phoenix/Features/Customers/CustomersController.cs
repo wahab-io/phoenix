@@ -10,6 +10,7 @@ using Phoenix.Client;
 
 namespace Phoenix.Features.Customers
 {
+    [Route("customers")]
     public sealed class CustomersController : Controller
     {
         private readonly PhoenixClient _phoenix;
@@ -19,11 +20,11 @@ namespace Phoenix.Features.Customers
         }
                 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int size = 10)
         {
             try
             {
-                var result = await _phoenix.Customers.GetAll();
+                var result = await _phoenix.Customers.GetAll(page, size);
                 return View(result);
             }
             catch (HttpRequestException ex)
@@ -32,15 +33,15 @@ namespace Phoenix.Features.Customers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get(long id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> View(long id)
         {
             var result = await _phoenix.Customers.GetCustomerById(id);
             return View(result);
         }
 
-        [HttpGet]
-        public IActionResult Add()
+        [HttpGet("new")]
+        public IActionResult New()
         {
             return View();
         }
@@ -53,7 +54,14 @@ namespace Phoenix.Features.Customers
             return await Index();
         }
 
-        [HttpPost]
+        [HttpGet("{id}/edit")]
+        public async Task<IActionResult> Edit([FromRoute] long id)
+        {
+            var customer = await _phoenix.Customers.GetCustomerById(id);
+            return View();
+        }
+
+        [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update([FromRoute] long id, [FromBody] UpdateCustomerRequest request)
         {
@@ -61,7 +69,7 @@ namespace Phoenix.Features.Customers
             return await Index();
         }
 
-        [HttpGet]
+        [HttpGet("{id}/delete")]
         public async Task<IActionResult> Delete(long id)
         {
             await _phoenix.Customers.DeleteCustomer(id);

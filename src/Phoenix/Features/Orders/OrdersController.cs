@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Phoenix.Features.Orders
 {
+    [Route("orders")]
     public sealed class OrdersController : Controller
     {
         public OrdersController()
@@ -13,6 +14,12 @@ namespace Phoenix.Features.Orders
 
         [HttpGet]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet("new")]
+        public IActionResult New()
         {
             return View();
         }

@@ -25,7 +25,7 @@ namespace Phoenix.Client
             return result;
         }
 
-        public async Task<GetCustomerReponse> GetCustomerById(long id)
+        public async Task<GetCustomerResponse> GetCustomerById(long id)
         {
             var response = await _client.GetAsync(
                 $"/api/customers/{id}");
@@ -33,12 +33,12 @@ namespace Phoenix.Client
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content
-                .ReadAsAsync<GetCustomerReponse>();
+                .ReadAsAsync<GetCustomerResponse>();
 
             return result;
         }
 
-        public async Task<GetCustomerReponse> CreateCustomer(CreateCustomerRequest customer)
+        public async Task<GetCustomerResponse> CreateCustomer(CreateCustomerRequest customer)
         {
             var data = JsonConvert.SerializeObject(customer);
             var response = await _client.PutAsync(
@@ -47,7 +47,7 @@ namespace Phoenix.Client
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content
-                .ReadAsAsync<GetCustomerReponse>();
+                .ReadAsAsync<GetCustomerResponse>();
 
             return result;
         }
@@ -55,7 +55,7 @@ namespace Phoenix.Client
         public async Task UpdateCustomer(UpdateCustomerRequest request)
         {
             var data = JsonConvert.SerializeObject(request);
-            var response = await _client.PutAsync(
+            var response = await _client.PatchAsync(
                 $"/api/customers/{request.Id}", new StringContent(data));
 
             response.EnsureSuccessStatusCode();

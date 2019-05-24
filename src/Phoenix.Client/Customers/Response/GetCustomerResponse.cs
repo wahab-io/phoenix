@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Phoenix.Client
 {
-    public class GetCustomerReponse
+    public class GetCustomerResponse
     {
         [JsonProperty]
         public long Id { get; set; }
@@ -18,7 +18,19 @@ namespace Phoenix.Client
         public string Fax { get; set; }
 
         [JsonProperty]
+        public string AddressLine1 { get; set; }
+
+        [JsonProperty]
+        public string AddressLine2 { get; set; }
+
+        [JsonProperty]
         public string City { get; set; }
+
+        [JsonProperty]
+        public string State { get; set; }
+
+        [JsonProperty]
+        public string ZipCode { get; set; }
 
         [JsonProperty]
         public string Country { get; set; }

@@ -1,16 +1,29 @@
-@model Phoenix.Features.Suppliers.SupplierViewModel
+@model Phoenix.Client.GetCustomerResponse
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Add Supplier</h1>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Edit Customer</h1>
+</div>
+
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="Post" asp-controller="Suppliers">
+        <form asp-action="Update" asp-controller="Customers">
             <div class="form-group">
                 <label asp-for="Name"></label>
                 <input asp-for="Name" class="form-control" placeholder="Enter Name" />
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Phone"></label>
+                    <input asp-for="Phone" class="form-control" placeholder="Enter Phone Number" />
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Fax"></label>
+                    <input asp-for="Fax" class="form-control" placeholder="Enter Fax Number" />
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="AddressLine1"></label>
@@ -18,7 +31,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="AddressLine2"></label>
-                <input asp-for="AddressLine2" class="form-control" placeholder="Enter Street Address" /> 
+                <input asp-for="AddressLine2" class="form-control" placeholder="Enter Street Address" />
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
@@ -35,6 +48,7 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="btn btn-outline-primary" asp-controller="Customers" asp-action="Index">Cancel</a>
         </form>
     </div>
     <div class="col-md-6">

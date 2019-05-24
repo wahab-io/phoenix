@@ -1,0 +1,38 @@
+@{
+    ViewData["Title"] = "New Product";
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">New Product</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Post" asp-controller="Products">
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" placeholder="Enter Name" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <input class="form-control" placeholder="Enter Description" />
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Price</label>
+                    <input class="form-control" placeholder="Enter Price" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Unit</label>
+                    <input class="form-control" placeholder="Enter Unit" />
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Standard</label>
+                    <input class="form-control" placeholder="Enter Standard" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="btn btn-outline-primary" asp-controller="Products" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+</div>

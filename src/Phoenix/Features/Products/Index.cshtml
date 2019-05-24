@@ -1,39 +1,12 @@
-@model IEnumerable<Phoenix.Features.Products.ProductViewModel>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Products";
 }
 
-<div>
-    <div class="row">
-        <div class="col-md-6">
-            <h1>Products</h1>
-        </div>
-        <div class="col-md-6">
-            <a asp-action="Add" asp-controller="Products" class="btn btn-primary">Add Products</a>
-        </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Products</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+    <div class="btn-group mr-2">
+        <a class="btn btn-sm btn-outline-secondary" asp-controller="Products" asp-action="New">New Product</a>
     </div>
-</div>
-
-<div>
-    <table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>            
-            <th scope="col">Description</th>
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model)
-        {
-            <tr>
-                <th scope="row">@Html.DisplayFor(c => product.Id)</th>
-                <td>@Html.DisplayFor(c => product.Name)</td>                
-                <td>@Html.DisplayFor(c => product.Description)</td>                
-                <td>@Html.ActionLink("Delete", "Delete", "Products", new { product.Id })</td>
-            </tr>   
-        }
-    </tbody>
-    </table>
+    </div>
 </div>

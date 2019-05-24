@@ -1,43 +1,48 @@
 @model Phoenix.Client.GetAllCustomersResponse
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Customers";
 }
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Customers</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a class="btn btn-sm btn-outline-secondary" asp-controller="Customers" asp-action="Add">New Customer</a>
+        <a class="btn btn-sm btn-outline-secondary" asp-controller="Customers" asp-action="New">New Customer</a>
     </div>
     </div>
 </div>
 
-<!-- <div>
+<div>
     <table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Phone</th>
-            <th scope="col">Fax</th>
-            <th scope="col">City</th>
-            <th scope="col">Country</th>            
-            <th scope="col">Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var customer in Model.Data)
-        {
+        <thead class="thead-dark">
             <tr>
-                <th scope="row">@Html.DisplayFor(c => customer.Id)</th>
-                <td>@Html.DisplayFor(c => customer.Name)</td>
-                <td>@Html.DisplayFor(c => customer.Phone)</td>
-                <td>@Html.DisplayFor(c => customer.Fax)</td>
-                <td>@Html.DisplayFor(c => customer.City)</td>
-                <td>@Html.DisplayFor(c => customer.Country)</td>                
-                <td>@Html.ActionLink("Delete", "Delete", "Customers", new { customer.Id })</td>
-            </tr>   
-        }
-    </tbody>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Fax</th>
+                <th scope="col">City</th>
+                <th scope="col">Country</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model.Data)
+            {
+                <tr>
+                    <th scope="row">@Html.DisplayFor(c => customer.Id)</th>
+                    <td>@Html.ActionLink(customer.Name, "View", "Customers", new { customer.Id })</td>
+                    <td>@Html.DisplayFor(c => customer.Phone)</td>
+                    <td>@Html.DisplayFor(c => customer.Fax)</td>
+                    <td>@Html.DisplayFor(c => customer.City)</td>
+                    <td>@Html.DisplayFor(c => customer.Country)</td>
+                </tr>   
+            }
+        </tbody>
     </table>
-</div> -->
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+        <a class="btn btn-secondary active" asp-action="Index" asp-controller="Customers" asp-route-page="1" asp-route-size="10">1</a>
+        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="2" asp-route-size="10">2</a>
+        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="3" asp-route-size="10">3</a>
+        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="4" asp-route-size="10">4</a>
+        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="5" asp-route-size="10">5</a>
+    </div>
+</div>

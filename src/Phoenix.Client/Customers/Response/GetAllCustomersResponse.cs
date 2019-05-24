@@ -7,7 +7,7 @@ namespace Phoenix.Client
     public class GetAllCustomersResponse
     {
         [JsonProperty]
-        public IEnumerable<GetCustomerReponse> Data { get; set; }
+        public IEnumerable<GetCustomerResponse> Data { get; set; }
         
         [JsonProperty]
         public string Next { get; set; }
