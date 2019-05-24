@@ -1,4 +1,4 @@
-@model Phoenix.Client.GetAllCustomersResponse
+@model Phoenix.Features.Customers.CustomerListViewModel
 @{
     ViewData["Title"] = "Customers";
 }
@@ -7,7 +7,7 @@
     <h1 class="h2">Customers</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a class="btn btn-sm btn-outline-secondary" asp-controller="Customers" asp-action="New">New Customer</a>
+        <a class="btn btn-sm btn-outline-primary" asp-controller="Customers" asp-action="New">New Customer</a>
     </div>
     </div>
 </div>
@@ -38,11 +38,31 @@
             }
         </tbody>
     </table>
-    <div class="btn-group mr-2" role="group" aria-label="First group">
-        <a class="btn btn-secondary active" asp-action="Index" asp-controller="Customers" asp-route-page="1" asp-route-size="10">1</a>
-        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="2" asp-route-size="10">2</a>
-        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="3" asp-route-size="10">3</a>
-        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="4" asp-route-size="10">4</a>
-        <a class="btn btn-secondary" asp-action="Index" asp-controller="Customers" asp-route-page="5" asp-route-size="10">5</a>
-    </div>
+    @if (Model.Data.Any() && Model.Total > Model.Size)
+    {
+        <nav>
+            <ul class="pagination justify-content-center">
+                @{
+                    string previousDisabled = !Model.HasPrevious ? "disabled" : "";
+                    string nextDisabled = !Model.HasNext ? "disabled" : "";
+                }
+                <li class="page-item @previousDisabled">
+                    <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@(Model.Page - 1)" asp-route-size="@Model.Size">Previous</a>
+                </li>
+                
+                @for(int i = 0, j = 1; i < Model.Total; i += Model.Size, j++)
+                {
+                    
+                    string active = Model.Page == j ? "active" : "";
+                    <li class="page-item @active">
+                        <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@j" asp-route-size="@Model.Size">@j</a>
+                    </li>
+                }
+
+                <li class="page-item @nextDisabled">
+                    <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@(Model.Page + 1)" asp-route-size="@Model.Size">Next</a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>

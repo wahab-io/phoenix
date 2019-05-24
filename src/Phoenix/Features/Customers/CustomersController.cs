@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using Phoenix.Client;
 
 
@@ -14,30 +15,32 @@ namespace Phoenix.Features.Customers
     public sealed class CustomersController : Controller
     {
         private readonly PhoenixClient _phoenix;
-        public CustomersController(PhoenixClient phoenix)
+        private readonly IMapper _mapper;
+        public CustomersController(PhoenixClient phoenix, IMapper mapper)
         {
             _phoenix = phoenix;
+            _mapper = mapper;
         }
                 
         [HttpGet]
         public async Task<IActionResult> Index(int page = 1, int size = 10)
         {
-            try
-            {
-                var result = await _phoenix.Customers.GetAll(page, size);
-                return View(result);
-            }
-            catch (HttpRequestException ex)
-            {
-                return View(ex.Data);
-            }
+            var result = await _phoenix.Customers.GetAll(page, size);
+                
+            var model = _mapper.Map<GetAllCustomersResponse, CustomerListViewModel>(result); 
+            model.Page = page;
+            model.Size = size;               
+            
+            return View(model);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> View(long id)
         {
             var result = await _phoenix.Customers.GetCustomerById(id);
-            return View(result);
+            var customer = _mapper.Map<GetCustomerResponse, CustomerViewModel>(result);
+            
+            return View(customer);
         }
 
         [HttpGet("new")]
@@ -48,9 +51,13 @@ namespace Phoenix.Features.Customers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Post([FromForm] CreateCustomerRequest request)
+        public async Task<IActionResult> Post([FromForm] CustomerViewModel model)
         {
-            var result = await _phoenix.Customers.CreateCustomer(request);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var customer = _mapper.Map<CustomerViewModel, CreateCustomerRequest>(model);
+            var result = await _phoenix.Customers.CreateCustomer(customer);
             return await Index();
         }
 

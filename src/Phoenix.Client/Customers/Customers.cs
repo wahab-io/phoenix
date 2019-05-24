@@ -52,11 +52,11 @@ namespace Phoenix.Client
             return result;
         }
 
-        public async Task UpdateCustomer(UpdateCustomerRequest request)
+        public async Task UpdateCustomer(UpdateCustomerRequest customer)
         {
-            var data = JsonConvert.SerializeObject(request);
+            var data = JsonConvert.SerializeObject(customer);
             var response = await _client.PatchAsync(
-                $"/api/customers/{request.Id}", new StringContent(data));
+                $"/api/customers/{customer.Id}", new StringContent(data));
 
             response.EnsureSuccessStatusCode();
         }

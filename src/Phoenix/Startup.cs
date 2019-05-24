@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using App.Metrics.AspNetCore.Mvc;
+using AutoMapper;
 using Phoenix.Client;
 
 namespace Phoenix
@@ -41,6 +42,8 @@ namespace Phoenix
             services.AddMvc()
                 .AddFeaturesFolder()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
