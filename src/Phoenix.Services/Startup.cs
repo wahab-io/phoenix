@@ -11,10 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using Phoenix.Domain;
 using Phoenix.Domain.Customers;
 using Phoenix.Domain.Suppliers;
 using Phoenix.Domain.Products;
+using Phoenix.Domain.Orders;
 using Phoenix.Infrastructure.EFCore;
 using Phoenix.Infrastructure.Services;
 
@@ -40,7 +42,10 @@ namespace Phoenix.Services
             services.AddScoped<ICustomerService, CustomerService>();
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

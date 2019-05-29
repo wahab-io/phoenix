@@ -12,57 +12,57 @@
     </div>
 </div>
 
-<div>
-    <table class="table table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Name</th>
-                <th scope="col">Phone</th>
-                <th scope="col">Fax</th>
-                <th scope="col">City</th>
-                <th scope="col">Country</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Model.Data)
-            {
+<div class="row">
+    <div class="col-12">
+        <table class="table table-hover table-bordered">
+            <thead class="thead-light">
                 <tr>
-                    <th scope="row">@Html.DisplayFor(c => customer.Id)</th>
-                    <td>@Html.ActionLink(customer.Name, "View", "Customers", new { customer.Id })</td>
-                    <td>@Html.DisplayFor(c => customer.Phone)</td>
-                    <td>@Html.DisplayFor(c => customer.Fax)</td>
-                    <td>@Html.DisplayFor(c => customer.City)</td>
-                    <td>@Html.DisplayFor(c => customer.Country)</td>
-                </tr>   
-            }
-        </tbody>
-    </table>
-    @if (Model.Data.Any() && Model.Total > Model.Size)
-    {
-        <nav>
-            <ul class="pagination justify-content-center">
-                @{
-                    string previousDisabled = !Model.HasPrevious ? "disabled" : "";
-                    string nextDisabled = !Model.HasNext ? "disabled" : "";
-                }
-                <li class="page-item @previousDisabled">
-                    <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@(Model.Page - 1)" asp-route-size="@Model.Size">Previous</a>
-                </li>
-                
-                @for(int i = 0, j = 1; i < Model.Total; i += Model.Size, j++)
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Fax</th>
+                    <th scope="col">City</th>                   
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Model.Data)
                 {
-                    
-                    string active = Model.Page == j ? "active" : "";
-                    <li class="page-item @active">
-                        <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@j" asp-route-size="@Model.Size">@j</a>
-                    </li>
+                    <tr>
+                        <th scope="row">@Html.DisplayFor(c => customer.Id)</th>
+                        <td>@Html.ActionLink(customer.Name, "View", "Customers", new { customer.Id })</td>
+                        <td>@Html.DisplayFor(c => customer.Phone)</td>
+                        <td>@Html.DisplayFor(c => customer.Fax)</td>
+                        <td>@Html.DisplayFor(c => customer.City)</td>                        
+                    </tr>   
                 }
+            </tbody>
+        </table>
+        @if (Model.Data.Any() && Model.Total > Model.Size)
+        {
+            <nav>
+                <ul class="pagination justify-content-center">
+                    @{
+                        string previousDisabled = !Model.HasPrevious ? "disabled" : "";
+                        string nextDisabled = !Model.HasNext ? "disabled" : "";
+                    }
+                    <li class="page-item @previousDisabled">
+                        <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@(Model.Page - 1)" asp-route-size="@Model.Size">Previous</a>
+                    </li>
+                    
+                    @for(int i = 0, j = 1; i < Model.Total; i += Model.Size, j++)
+                    {
+                        
+                        string active = Model.Page == j ? "active" : "";
+                        <li class="page-item @active">
+                            <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@j" asp-route-size="@Model.Size">@j</a>
+                        </li>
+                    }
 
-                <li class="page-item @nextDisabled">
-                    <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@(Model.Page + 1)" asp-route-size="@Model.Size">Next</a>
-                </li>
-            </ul>
-        </nav>
-    }
+                    <li class="page-item @nextDisabled">
+                        <a class="page-link" asp-action="Index" asp-controller="Customers" asp-route-page="@(Model.Page + 1)" asp-route-size="@Model.Size">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        }
+    </div>
 </div>

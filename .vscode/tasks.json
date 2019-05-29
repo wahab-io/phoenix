@@ -10,6 +10,16 @@
                 "${workspaceFolder}/src/Phoenix/Phoenix.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-services",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Phoenix.Services/Phoenix.Services.csproj"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

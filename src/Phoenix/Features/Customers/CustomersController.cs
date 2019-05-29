@@ -56,31 +56,32 @@ namespace Phoenix.Features.Customers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var customer = _mapper.Map<CustomerViewModel, CreateCustomerRequest>(model);
-            var result = await _phoenix.Customers.CreateCustomer(customer);
-            return await Index();
+            var request = _mapper.Map<CustomerViewModel, CreateCustomerRequest>(model);
+            var result = await _phoenix.Customers.CreateCustomer(request);
+            return RedirectToAction("View", new { id = result.Id });
         }
 
         [HttpGet("{id}/edit")]
         public async Task<IActionResult> Edit([FromRoute] long id)
         {
             var customer = await _phoenix.Customers.GetCustomerById(id);
-            return View();
+            return View(customer);
         }
 
         [HttpPost("{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Update([FromRoute] long id, [FromBody] UpdateCustomerRequest request)
+        public async Task<IActionResult> Update([FromRoute] long id, [FromForm] CustomerViewModel model)
         {
+            var request = _mapper.Map<CustomerViewModel, UpdateCustomerRequest>(model);
             await _phoenix.Customers.UpdateCustomer(request);
-            return await Index();
+            return RedirectToAction("View", new { id = id });
         }
 
         [HttpGet("{id}/delete")]
         public async Task<IActionResult> Delete(long id)
         {
             await _phoenix.Customers.DeleteCustomer(id);
-            return await Index();
+            return RedirectToAction("Index");
         }
     }
 }

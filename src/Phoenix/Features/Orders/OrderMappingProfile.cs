@@ -8,7 +8,8 @@ namespace Phoenix.Features.Orders
     {
         public OrderMappingProfile()
         {
-            
+            CreateMap<GetOrderResponse, OrderViewModel>();
+            CreateMap<GetAllOrdersResponse, OrderListViewModel>();
         }
     }
 }

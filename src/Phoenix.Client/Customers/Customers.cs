@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
@@ -42,7 +43,7 @@ namespace Phoenix.Client
         {
             var data = JsonConvert.SerializeObject(customer);
             var response = await _client.PutAsync(
-                "/api/customers", new StringContent(data));
+                "/api/customers", new StringContent(data, Encoding.UTF8, "application/json"));
 
             response.EnsureSuccessStatusCode();
 
@@ -56,7 +57,7 @@ namespace Phoenix.Client
         {
             var data = JsonConvert.SerializeObject(customer);
             var response = await _client.PatchAsync(
-                $"/api/customers/{customer.Id}", new StringContent(data));
+                $"/api/customers/{customer.Id}", new StringContent(data, Encoding.UTF8, "application/json"));
 
             response.EnsureSuccessStatusCode();
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 using Phoenix.Domain.Customers;
 
 namespace Phoenix.Services.Controllers
@@ -11,15 +12,17 @@ namespace Phoenix.Services.Controllers
     public class CustomersController : PhoenixBaseController
     {
         private readonly ICustomerService _service;
-        public CustomersController(ICustomerService service)
+        private readonly IMapper _mapper;
+        public CustomersController(ICustomerService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<dynamic> GetAll(int page = 1, int size = 10)
+        public ActionResult<CustomerListDto> GetAll(int page = 1, int size = 10)
         {
             try
             {
@@ -30,7 +33,8 @@ namespace Phoenix.Services.Controllers
                 if (page * size < total )
                     next = Url.Action(nameof(GetAll), new { page = page + 1, size = size });
 
-                var response = new { data = customers, next = next, total = total };
+                var data = _mapper.Map<IEnumerable<Customer>, IEnumerable<CustomerDto>>(customers);
+                var response = new CustomerListDto { Data = data, Next = next, Total = total };
                 return Ok(response);
             }
             catch (ArgumentOutOfRangeException)
@@ -43,14 +47,16 @@ namespace Phoenix.Services.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Customer> Get(long id)
+        public ActionResult<CustomerDto> Get(long id)
         {
             try 
             {
                 var customer = _service.GetCustomerById(id);
                 if (customer == null)
                     return NotFound();
-                return Ok(customer);
+                
+                var result = _mapper.Map<Customer, CustomerDto>(customer);
+                return Ok(result);
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -61,12 +67,15 @@ namespace Phoenix.Services.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<Customer> Create([FromBody] Customer customer)
+        public ActionResult<CustomerDto> Create([FromBody] NewCustomerDto data)
         {
             try
             {
+                var customer = _mapper.Map<NewCustomerDto, Customer>(data);
                 var newCustomer = _service.CreateCustomer(customer);
-                return CreatedAtAction(nameof(Get), new { id = newCustomer.Id }, newCustomer);
+
+                var result = _mapper.Map<Customer, CustomerDto>(newCustomer);
+                return CreatedAtAction(nameof(Get), new { id = newCustomer.Id }, result);
             }
             catch (ArgumentException)
             {
@@ -78,10 +87,11 @@ namespace Phoenix.Services.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Update([FromBody] Customer customer)
+        public ActionResult Update([FromBody] CustomerDto data)
         {
             try
             {
+                var customer = _mapper.Map<CustomerDto, Customer>(data);
                 _service.UpdateCustomer(customer);
                 return NoContent();
             }

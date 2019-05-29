@@ -7,8 +7,8 @@
     <h1 class="h2">@Model.Name</h1>
     <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-        <a class="btn btn-sm btn-outline-primary" asp-controller="Customers" asp-action="Edit">Update Customer</a>
-        <a class="btn btn-sm btn-outline-danger" asp-controller="Customers" asp-action="Add">Delete Customer</a>
+        <a class="btn btn-sm btn-outline-primary" asp-controller="Customers" asp-action="Edit" asp-route-id="@Model.Id">Update Customer</a>
+        <a class="btn btn-sm btn-outline-danger" asp-controller="Customers" asp-action="Delete" asp-route-id="@Model.Id">Delete Customer</a>
     </div>
     </div>
 </div>
@@ -34,11 +34,11 @@
     </div>
 </div>
 <div class="section">
-    <h2>Recent Orders</h2>
+    <h4>Recent Orders</h4>
     <div class="row">
         <div class="col-8">
             <table class="table table-hover table-bordered">
-                <thead class="thead-dark">
+                <thead class="thead-light">
                     <th>Id</th>
                     <th>Product</th>
                     <th>Quantity</th>

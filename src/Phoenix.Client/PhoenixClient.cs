@@ -16,10 +16,12 @@ namespace Phoenix.Client
             Customers = new Customers(_client);
             Suppliers = new Suppliers(_client);
             Products = new Products(_client);
+            Orders = new Orders(_client);
         }
 
         public Customers Customers { get; }
         public Suppliers Suppliers { get; }
         public Products Products { get; }
+        public Orders Orders { get; }
     }
 }

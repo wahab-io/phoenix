@@ -6,66 +6,66 @@ using Newtonsoft.Json;
 
 namespace Phoenix.Client
 {
-    public class Products
+    public class Orders
     {
         private readonly HttpClient _client;
-        public Products(HttpClient client)
+        public Orders(HttpClient client)
         {
             _client = client;
         }
-        public async Task<GetAllProductsResponse> GetAll(int page = 1, int size = 25)
+        public async Task<GetAllOrdersResponse> GetAll(int page = 1, int size = 25)
         {
             var response = await _client.GetAsync(
-                $"/api/products?page={page}&size={size}");
+                $"/api/orders?page={page}&size={size}");
 
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content
-                .ReadAsAsync<GetAllProductsResponse>();
+                .ReadAsAsync<GetAllOrdersResponse>();
 
             return result;
         }
 
-        public async Task<GetProductResponse> GetProductById(long id)
+        public async Task<GetOrderResponse> GetOrderById(long id)
         {
             var response = await _client.GetAsync(
-                $"/api/products/{id}");
+                $"/api/orders/{id}");
 
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content
-                .ReadAsAsync<GetProductResponse>();
+                .ReadAsAsync<GetOrderResponse>();
 
             return result;
         }
 
-        public async Task<GetProductResponse> CreateProduct(CreateProductRequest product)
+        public async Task<GetOrderResponse> CreateOrder(CreateOrderRequest order)
         {
-            var data = JsonConvert.SerializeObject(product);
+            var data = JsonConvert.SerializeObject(order);
             var response = await _client.PutAsync(
-                "/api/products", new StringContent(data, Encoding.UTF8, "application/json"));
-            
+                "/api/orders", new StringContent(data, Encoding.UTF8, "application/json"));
+
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content
-                .ReadAsAsync<GetProductResponse>();
+                .ReadAsAsync<GetOrderResponse>();
 
             return result;
         }
 
-        public async Task UpdateProduct(UpdateProductRequest product)
+        public async Task UpdateOrder(UpdateOrderRequest order)
         {
-            var data = JsonConvert.SerializeObject(product);
+            var data = JsonConvert.SerializeObject(order);
             var response = await _client.PatchAsync(
-                $"/api/products/{product.Id}", new StringContent(data, Encoding.UTF8, "application/json"));
+                $"/api/orders/{order.Id}", new StringContent(data, Encoding.UTF8, "application/json"));
 
             response.EnsureSuccessStatusCode();
         }
         
-        public async Task DeleteProduct(long id)
+        public async Task DeleteOrder(long id)
         {
             var response = await _client.DeleteAsync(
-                $"/api/products/{id}");
+                $"/api/orders/{id}");
 
             response.EnsureSuccessStatusCode();
         }
